@@ -1,14 +1,14 @@
 
 import UIKit
 
-public class DocumentDownload: NSObject{
+public class CDDocumentViewer: NSObject{
     
-    enum LoadStatus{
+    public enum LoadStatus{
         case start
         case ing
         case end(isSuccess: Bool, errorMessage: String?)
     }
-    typealias DocumentDownloadStatusCloser = (LoadStatus)->()
+    public typealias DocumentDownloadStatusCloser = (LoadStatus)->()
     
     
     deinit{
@@ -22,7 +22,7 @@ public class DocumentDownload: NSObject{
     private let _documentInteractionController: UIDocumentInteractionController
     private var _task: URLSessionDataTask?
     
-    init(presenter: UIViewController, statusCloser: DocumentDownloadStatusCloser? = nil) {
+    public init(presenter: UIViewController, statusCloser: DocumentDownloadStatusCloser? = nil) {
         self._presenter = presenter
         self._statusCloser = statusCloser
         self._documentInteractionController = UIDocumentInteractionController()
@@ -30,6 +30,10 @@ public class DocumentDownload: NSObject{
         super.init()
         
         self._documentInteractionController.delegate = self
+    }
+    
+    func setStatusCloser(statusCloser: @escaping DocumentDownloadStatusCloser){
+        self._statusCloser = statusCloser
     }
     
     func opnePDF(urlStr: String?, title: String){
@@ -59,8 +63,8 @@ public class DocumentDownload: NSObject{
     }
     
     
-    /// This function will store your document to some temporary URL and then provide sharing, copying, printing, saving options to the user
-    private func storeAndShare(withURLString: String, title: String) {
+    /// This function will store your document to some temporary URL a.nd then provide sharing, copying, printing, saving options to the user
+    private func storeAndShare(withURLString: String, title: String){
         self._statusCloser?(.start)
         guard let url = URL(string: withURLString) else {
             self._statusCloser?(.end(isSuccess: false, errorMessage: "invalid url address"))
@@ -103,7 +107,7 @@ public class DocumentDownload: NSObject{
     }
 }
 
-extension DocumentDownload: UIDocumentInteractionControllerDelegate {
+extension CDDocumentViewer: UIDocumentInteractionControllerDelegate {
     public func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
         self._presenter
     }
