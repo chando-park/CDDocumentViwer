@@ -3,12 +3,12 @@ import UIKit
 
 public class DocumentDownload: NSObject{
     
-    enum LoadStatus{
+    public enum LoadStatus{
         case start
         case ing
         case end(isSuccess: Bool, errorMessage: String?)
     }
-    typealias DocumentDownloadStatusCloser = (LoadStatus)->()
+    public typealias DocumentDownloadStatusCloser = (LoadStatus)->()
     
     
     deinit{
@@ -22,7 +22,7 @@ public class DocumentDownload: NSObject{
     private let _documentInteractionController: UIDocumentInteractionController
     private var _task: URLSessionDataTask?
     
-    init(presenter: UIViewController, statusCloser: DocumentDownloadStatusCloser? = nil) {
+    public init(presenter: UIViewController, statusCloser: DocumentDownloadStatusCloser? = nil) {
         self._presenter = presenter
         self._statusCloser = statusCloser
         self._documentInteractionController = UIDocumentInteractionController()
