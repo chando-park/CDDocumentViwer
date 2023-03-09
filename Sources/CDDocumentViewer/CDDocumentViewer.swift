@@ -1,7 +1,7 @@
 
 import UIKit
 
-class DocumentDownload: NSObject{
+public class DocumentDownload: NSObject{
     
     enum LoadStatus{
         case start
@@ -104,7 +104,7 @@ class DocumentDownload: NSObject{
 }
 
 extension DocumentDownload: UIDocumentInteractionControllerDelegate {
-    func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
+    public func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
         self._presenter
     }
 }
